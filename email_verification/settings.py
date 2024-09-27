@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "accounts",
     "django_celery_results",
+    "drf_yasg",
 ]
 
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True

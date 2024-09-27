@@ -4,12 +4,20 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer, VerifyAcountSerializer
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 from django.contrib.auth.hashers import make_password
 from .tasks import send_otp_via_mail, otp_timer
 
+from drf_yasg.utils import swagger_auto_schema
+from django.views.decorators.csrf import csrf_exempt
+
 class RegisterAPI(APIView):
+
+  @csrf_exempt
+  @swagger_auto_schema(request_body=UserSerializer)
   def post(self, request):
     try:
       data = request.data
@@ -38,6 +46,9 @@ class RegisterAPI(APIView):
 
 
 class VerifyOTP(APIView):
+
+  @csrf_exempt
+  @swagger_auto_schema(request_body=VerifyAcountSerializer)
   def post(self, request):
     try:
       data = request.data
@@ -89,6 +100,7 @@ def resend_otp(request, id):
 
 
 @api_view(['GET'])
+# @permission_classes([IsAdminUser])
 def all_users(request):
   users = User.objects.all()
   serializer = UserSerializer(users, many=True)
