@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer, VerifyAcountSerializer
 from rest_framework import status
+from rest_framework.decorators import api_view
 
-from .tasks import send_otp_via_mail
+from django.contrib.auth.hashers import make_password
+from .tasks import send_otp_via_mail, otp_timer
 
 class RegisterAPI(APIView):
   def post(self, request):
@@ -13,11 +15,13 @@ class RegisterAPI(APIView):
       data = request.data
       serializer = UserSerializer(data=data)
       if serializer.is_valid():
-        serializer.save()
+        password = make_password(data['password'])
+        serializer.save(password = password)
         send_otp_via_mail.delay(serializer.data['email'])
+        otp_timer.apply_async((serializer.data['email'],), countdown=600)
         return Response({
           'status':200,
-          'message':'Registration sucessful, check your mail.',
+          'message':'Registration successful, check your mail.',
           'data':serializer.data,
         }, status.HTTP_200_OK)
       return Response({
@@ -71,4 +75,26 @@ class VerifyOTP(APIView):
         'error':str(e)
       }, status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['GET'])
+def resend_otp(request, id):
+  user = get_object_or_404(User, id=id)
+  email = user.email
+  send_otp_via_mail.delay(email)
+  otp_timer.apply_async((email, ), countdown = 600)
+  return Response({
+    'status':200,
+    'message':'OTP sent sucessfully, Expires in 5min.'
+  }, status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def all_users(request):
+  users = User.objects.all()
+  serializer = UserSerializer(users, many=True)
+  return Response({
+    'status':200,
+    'Message':"List of all users",
+    'data':serializer.data
+  }, status.HTTP_200_OK)
 

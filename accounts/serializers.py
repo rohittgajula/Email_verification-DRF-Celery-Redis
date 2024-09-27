@@ -4,11 +4,10 @@ from .models import User
 class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
-    fields = ['email', 'password', 'is_verified']
+    fields = ['id', 'email', 'password', 'is_verified']
 
 class VerifyAcountSerializer(serializers.Serializer):
   
   email = serializers.EmailField()
   otp = serializers.CharField()
-
 
