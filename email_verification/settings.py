@@ -30,7 +30,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'email-verification-gfn7.onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
-    "email-verification-gfn7.onrender.com",
+    "https://email-verification-gfn7.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
