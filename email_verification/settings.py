@@ -27,10 +27,10 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'https://email-verification-a73x.onrender.com']
+ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'email-verification-gfn7.onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
-    "https://email-verification-a73x.onrender.com",
+    "email-verification-gfn7.onrender.com",
 ]
 
 CORS_ALLOW_ALL_ORIGINS = True
