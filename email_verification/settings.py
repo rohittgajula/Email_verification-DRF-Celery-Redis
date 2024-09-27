@@ -21,12 +21,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)(a(calagw7%^+=xdm3easq)x$2dfa)uv8d&^u8zdbgnc)or6t'
+# SECRET_KEY = 'django-insecure-)(a(calagw7%^+=xdm3easq)x$2dfa)uv8d&^u8zdbgnc)or6t'
+
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+CORS_ALLOWED_ORIGINS = [
+    "https://email-verification-a73x.onrender.com",
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -43,6 +52,7 @@ INSTALLED_APPS = [
     "accounts",
     "django_celery_results",
     "drf_yasg",
+    "corsheaders",
 ]
 
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
@@ -63,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'email_verification.urls'
