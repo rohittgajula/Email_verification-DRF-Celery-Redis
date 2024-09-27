@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-)(a(calagw7%^+=xdm3easq)x$2dfa)uv8d&^u8zdbgnc)or6t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = 'accounts.User'
 
@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
