@@ -21,7 +21,7 @@ class RegisterAPI(APIView):
         otp_timer.apply_async((serializer.data['email'],), countdown=600)
         return Response({
           'status':200,
-          'message':'Registration successful, check your mail. OTP expires in 5min',
+          'message':'Registration successful, check your email for OTP verification, Expires in 5min.',
           'data':serializer.data,
         }, status.HTTP_200_OK)
       return Response({
