@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost', '127.0.0.1', 'email-verification-gfn7.onrender.com']
 
@@ -33,16 +33,24 @@ CORS_ALLOWED_ORIGINS = [
     "https://email-verification-gfn7.onrender.com",
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
+    'x-requested-with',
     'x-csrftoken',
-    # Add any other headers you need to allow
+    'accept',
+    'accept-encoding',
+    'origin',
+    'user-agent',
 ]
 
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 AUTH_USER_MODEL = 'accounts.User'
 
