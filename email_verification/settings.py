@@ -13,32 +13,23 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 from decouple import config
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['email-verification-gfn7.onrender.com', 'localhost', '127.0.0.1', '0.0.0.0']
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8000",
-    "https://email-verification-gfn7.onrender.com",
-]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "https://email-verification-gfn7.onrender.com",
+# ]
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+CORS_ALLOW_CREDENTIALS = True
+
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://email-verification-gfn7.onrender.com']
-
-# CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
@@ -46,7 +37,7 @@ CORS_ALLOW_HEADERS = [
     'content-type',
     'authorization',
     'x-requested-with',
-    'x-csrftoken',
+    'x-tokenise',
     'accept',
     'accept-encoding',
     'origin',
@@ -58,8 +49,6 @@ SECURE_SSL_REDIRECT = False
 CSRF_COOKIE_SECURE = True
 
 AUTH_USER_MODEL = 'accounts.User'
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
